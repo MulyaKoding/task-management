@@ -1,0 +1,37 @@
+# Dependency directories
+node_modules/
+mobile/node_modules/
+
+# Expo & Metro
+.expo/
+mobile/.expo/
+web-build/
+dist/
+
+# Binaries & Go builds
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+backend/server
+backend/server.exe
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs & Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
