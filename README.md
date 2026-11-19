@@ -5,6 +5,7 @@ Fullstack task management system built with Go (Gin), MySQL, Redis, and React Na
 ## Tech Stack
 
 ### Backend
+
 - Go 1.25+
 - Gin Web Framework
 - MySQL 8.0 (`database/sql` + `go-sql-driver/mysql`)
@@ -12,6 +13,7 @@ Fullstack task management system built with Go (Gin), MySQL, Redis, and React Na
 - Testing: `testify`, `go-sqlmock`
 
 ### Frontend
+
 - React Native 0.88 / Expo SDK 58 (Expo Router)
 - TypeScript
 - Testing: Jest, `@testing-library/react-native`
@@ -52,11 +54,13 @@ task-management/
 ## Setup and Installation
 
 ### Prerequisites
+
 - Go 1.25 or higher
 - Node.js (v20+) and npm
 - Docker and Docker Compose
 
 ### 1. Database and Cache (Docker)
+
 Start MySQL and Redis using Docker Compose:
 
 ```bash
@@ -64,6 +68,7 @@ docker compose up -d
 ```
 
 Containers started:
+
 - MySQL: `localhost:3306` (database: `taskdb`, credentials: `root:root`)
 - Redis: `localhost:6379`
 
@@ -79,6 +84,7 @@ go run cmd/server/main.go
 The server runs on `http://localhost:8080`.
 
 Optional environment variables:
+
 - `PORT` (default: `8080`)
 - `DB_HOST` (default: `localhost`)
 - `DB_PORT` (default: `3306`)
@@ -98,6 +104,7 @@ npm run web
 ```
 
 To run on mobile platforms:
+
 - Android: `npm run android`
 - iOS: `npm run ios`
 
@@ -124,6 +131,7 @@ CREATE TABLE IF NOT EXISTS tasks (
 ```
 
 Design details:
+
 - Soft delete: `deleted_at` column is updated with a timestamp on delete. All queries filter with `WHERE deleted_at IS NULL`.
 - Unique title: `UNIQUE KEY uq_title (title)` prevents duplicate titles at the database layer.
 - Indexes: `idx_status` and `idx_assignee` index frequent filter targets.
@@ -136,14 +144,14 @@ Base URL: `http://localhost:8080/api`
 
 ### Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/health` | Health check |
-| `GET` | `/api/tasks` | Get paginated task list with filters (Redis cached) |
-| `POST` | `/api/tasks` | Create new task (invalidates cache) |
-| `GET` | `/api/tasks/:id` | Get task by ID |
-| `PUT` | `/api/tasks/:id` | Update task by ID (invalidates cache) |
-| `DELETE` | `/api/tasks/:id` | Soft delete task by ID (invalidates cache) |
+| Method   | Endpoint         | Description                                         |
+| -------- | ---------------- | --------------------------------------------------- |
+| `GET`    | `/health`        | Health check                                        |
+| `GET`    | `/api/tasks`     | Get paginated task list with filters (Redis cached) |
+| `POST`   | `/api/tasks`     | Create new task (invalidates cache)                 |
+| `GET`    | `/api/tasks/:id` | Get task by ID                                      |
+| `PUT`    | `/api/tasks/:id` | Update task by ID (invalidates cache)               |
+| `DELETE` | `/api/tasks/:id` | Soft delete task by ID (invalidates cache)          |
 
 ### GET /api/tasks Parameters
 
@@ -157,6 +165,7 @@ Base URL: `http://localhost:8080/api`
 ### Response Format
 
 Success (list):
+
 ```json
 {
   "success": true,
@@ -181,6 +190,7 @@ Success (list):
 ```
 
 Error response:
+
 ```json
 {
   "success": false,
@@ -192,6 +202,7 @@ Error response:
 ```
 
 HTTP status codes used:
+
 - `200 OK`: Successful query, update, or delete.
 - `201 Created`: Resource successfully created.
 - `400 Bad Request`: Validation failure or invalid parameters.
@@ -241,6 +252,7 @@ go test -v ./...
 ```
 
 Tests included:
+
 - `TestMySQLTaskRepository_Update_Success`
 - `TestMySQLTaskRepository_Update_DuplicateTitle_ReturnsConflict`
 - `TestMySQLTaskRepository_List_SearchAndHideSoftDeleted`
@@ -263,6 +275,7 @@ npm test
 ```
 
 Tests included in `mobile/src/components/__tests__/task-components.test.tsx`:
+
 - `TaskSearchBar`: Input changes and clear button handling.
 - `TaskStatusFilter`: Selection and status change callbacks.
 - `TaskCard`: Rendering details, assignee, status badge, edit and delete events.
